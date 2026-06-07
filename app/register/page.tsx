@@ -7,6 +7,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import api from "../lib/api";
+import { setToken } from "../lib/auth";
 
 const registerSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
@@ -30,7 +31,7 @@ export default function RegisterPage() {
     setError("");
     try {
       const response = await api.post("/api/auth/register", data);
-      localStorage.setItem("token", response.data.token);
+      setToken(response.data.token);
       router.push("/dashboard");
     } catch {
       setError("Email already exists or registration failed");

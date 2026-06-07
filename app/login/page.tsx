@@ -7,6 +7,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import api from "../lib/api";
+import { setToken } from "../lib/auth";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -33,7 +34,7 @@ export default function LoginPage() {
     setError("");
     try {
       const response = await api.post("/api/auth/login", data);
-      localStorage.setItem("token", response.data.token);
+      setToken(response.data.token);
       router.push("/dashboard");
     } catch {
       setError("Invalid email or password");

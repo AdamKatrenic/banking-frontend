@@ -1,14 +1,15 @@
+import Cookies from "js-cookie";
+
 export const getToken = (): string | null => {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem("token");
+  return Cookies.get("token") || null;
 };
 
 export const setToken = (token: string): void => {
-  localStorage.setItem("token", token);
+  Cookies.set("token", token, { expires: 1 }); // 1 deň
 };
 
 export const removeToken = (): void => {
-  localStorage.removeItem("token");
+  Cookies.remove("token");
 };
 
 export const isAuthenticated = (): boolean => {
