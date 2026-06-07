@@ -1,19 +1,5 @@
 @import "tailwindcss";
 
-@theme {
-
-className="bg-[#0F1117]"
-
-className="bg-[#1A1D27]"
-
-className="border-[#2A2D3A]"
-
-className="bg-[#00BFA6]"
-className="text-[#00BFA6]"
-
-className="hover:bg-[#00A896]"
-}
-
 body {
   background-color: #0F1117;
   color: white;
