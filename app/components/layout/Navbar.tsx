@@ -8,8 +8,7 @@ export default function Navbar() {
     <nav className="border-b border-[#2A2D3A] bg-[#1A1D27]">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-[#00BFA6] text-2xl font-bold">🏦</span>
-          <span className="text-white font-bold text-xl">BankingApp</span>
+          <span className="text-white font-bold text-xl">AdamBankingApp</span>
         </div>
         <button
           onClick={logout}

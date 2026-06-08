@@ -8,7 +8,7 @@ export default function WelcomeBanner({ name, totalBalance }: WelcomeBannerProps
     <div className="bg-gradient-to-r from-[#00BFA6]/20 to-[#1A1D27] border border-[#00BFA6]/30 rounded-2xl p-6 mb-6">
       <p className="text-gray-400 text-sm mb-1">Welcome back</p>
       <h1 className="text-2xl font-bold text-white mb-4">
-        {name} 👋
+        {name} 
       </h1>
       <div>
         <p className="text-gray-400 text-sm">Total Balance</p>

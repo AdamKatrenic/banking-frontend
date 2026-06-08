@@ -2,20 +2,20 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Account } from "../../lib/types";
-import { getToken, logout } from "../../lib/auth";
-import { useAccounts } from "../../hooks/useAccounts";
-import { useTransactions } from "../../hooks/useTransactions";
-import api from "../../lib/api";
+import { Account } from "../lib/types";
+import { getToken, logout, getUserEmail } from "../lib/auth";
+import { useAccounts } from "../hooks/useAccounts";
+import { useTransactions } from "../hooks/useTransactions";
+import api from "../lib/api";
 
-import PageWrapper from "../../components/layout/PageWrapper";
-import WelcomeBanner from "../../components/dashboard/WelcomeBanner";
-import AccountList from "../../components/dashboard/AccountList";
-import QuickActions from "../../components/dashboard/QuickActions";
-import RecentTransactions from "../../components/dashboard/RecentTransactions";
-import DepositModal from "../../components/modals/DepositModal";
-import WithdrawModal from "../../components/modals/WithdrawModal";
-import TransferModal from "../../components/modals/TransferModal";
+import PageWrapper from "../components/layout/PageWrapper";
+import WelcomeBanner from "../components/dashboard/WelcomeBanner";
+import AccountList from "../components/dashboard/AccountList";
+import QuickActions from "../components/dashboard/QuickActions";
+import RecentTransactions from "../components/dashboard/RecentTransactions";
+import DepositModal from "../components/modals/DepositModal";
+import WithdrawModal from "../components/modals/WithdrawModal";
+import TransferModal from "../components/modals/TransferModal";
 
 type ModalType = "deposit" | "withdraw" | "transfer" | null;
 
@@ -23,7 +23,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
   const [modal, setModal] = useState<ModalType>(null);
-  const [userName, setUserName] = useState("User");
+  const userName = getUserEmail() || "User";
 
   const { accounts, loading: accountsLoading, fetchAccounts } = useAccounts();
   const { transactions, loading: txLoading, fetchTransactions } = useTransactions();

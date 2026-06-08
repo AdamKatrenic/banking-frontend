@@ -27,18 +27,19 @@ export default function RegisterPage() {
   });
 
   const onSubmit = async (data: RegisterForm) => {
-    setLoading(true);
-    setError("");
-    try {
-      const response = await api.post("/api/auth/register", data);
-      setToken(response.data.token);
-      router.push("/dashboard");
-    } catch {
-      setError("Email already exists or registration failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  setError("");
+  try {
+    const response = await api.post("/api/auth/register", data);
+    setToken(response.data.token);
+    await new Promise(resolve => setTimeout(resolve, 100)); // ← pridaj
+    router.push("/dashboard");
+  } catch {
+    setError("Email already exists or registration failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-950">
