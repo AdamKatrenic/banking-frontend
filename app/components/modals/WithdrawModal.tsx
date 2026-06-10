@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 const schema = z.object({
   amount: z.coerce.number().positive("Amount must be greater than zero"),
@@ -45,9 +46,11 @@ export default function WithdrawModal({
         accountNumber,
         amount: data.amount,
       });
+      toast.success("Withdrawal successful! Your balance will update shortly.");
       onSuccess();
       onClose();
     } catch {
+      toast.error("Withdrawal failed. Please try again.");
       setError("Insufficient funds or withdrawal failed.");
     } finally {
       setLoading(false);

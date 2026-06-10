@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 const schema = z.object({
   toAccountNumber: z.string().min(1, "Target account number is required"),
@@ -47,10 +48,12 @@ export default function TransferModal({
         toAccountNumber: data.toAccountNumber,
         amount: data.amount,
       });
+      toast.success("Transfer successful! Your balance will update shortly.");
       onSuccess();
       onClose();
     } catch {
-      setError("Transfer failed. Check account number or balance.");
+      toast.error("Transfer failed. Check account number or balance.");
+      setError("Transfer failed. Please try again.");
     } finally {
       setLoading(false);
     }

@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import api from "../../lib/api";
+import toast from "react-hot-toast";
 
 const schema = z.object({
   amount: z.coerce.number().positive("Amount must be greater than zero"),
@@ -45,9 +46,11 @@ export default function DepositModal({
         accountNumber,
         amount: data.amount,
       });
+      toast.success("Deposit successful! Your balance will update shortly.");
       onSuccess();
       onClose();
     } catch {
+      toast.error("Deposit failed. Please try again.");
       setError("Deposit failed. Please try again.");
     } finally {
       setLoading(false);
