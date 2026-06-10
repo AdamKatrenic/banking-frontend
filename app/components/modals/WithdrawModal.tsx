@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import api from "../../lib/api";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 const schema = z.object({
   amount: z.coerce.number().positive("Amount must be greater than zero"),
@@ -58,8 +59,19 @@ export default function WithdrawModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-      <div className="bg-[#1A1D27] border border-[#2A2D3A] rounded-2xl p-6 w-full max-w-md mx-4">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+    >
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        className="bg-[#1A1D27] border border-[#2A2D3A] rounded-2xl p-6 w-full max-w-md mx-4"
+      >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-white font-bold text-xl">Withdraw Funds</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-white">
@@ -87,7 +99,7 @@ export default function WithdrawModal({
             </Button>
           </div>
         </form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
