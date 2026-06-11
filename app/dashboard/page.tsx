@@ -7,6 +7,7 @@ import { getToken, logout, getUserEmail } from "../lib/auth";
 import { useAccounts } from "../hooks/useAccounts";
 import { useTransactions } from "../hooks/useTransactions";
 import api from "../lib/api";
+import TransactionChart from "../components/dashboard/TransactionChart";
 
 import PageWrapper from "../components/layout/PageWrapper";
 import WelcomeBanner from "../components/dashboard/WelcomeBanner";
@@ -26,7 +27,11 @@ export default function DashboardPage() {
   const userName = getUserEmail() || "User";
 
   const { accounts, loading: accountsLoading, fetchAccounts } = useAccounts();
-  const { transactions, loading: txLoading, fetchTransactions } = useTransactions();
+  const {
+    transactions,
+    loading: txLoading,
+    fetchTransactions,
+  } = useTransactions();
 
   useEffect(() => {
     if (!getToken()) {
@@ -42,7 +47,10 @@ export default function DashboardPage() {
     }
   }, [selectedAccount]);
 
-  const totalBalance = accounts.reduce((sum, acc) => sum + Number(acc.balance), 0);
+  const totalBalance = accounts.reduce(
+    (sum, acc) => sum + Number(acc.balance),
+    0,
+  );
 
   const handleCreateAccount = async () => {
     try {
@@ -79,10 +87,11 @@ export default function DashboardPage() {
         disabled={!selectedAccount}
       />
 
-      <RecentTransactions
-        transactions={transactions}
-        loading={txLoading}
-      />
+      <RecentTransactions transactions={transactions} loading={txLoading} />
+
+      <div className="mt-6">
+        <TransactionChart transactions={transactions} />
+      </div>
 
       {modal === "deposit" && selectedAccount && (
         <DepositModal
