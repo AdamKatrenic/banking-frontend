@@ -1,7 +1,8 @@
 "use client";
 
 import { logout } from "../../lib/auth";
-import { LogOut } from "lucide-react";
+import { LogOut, User } from "lucide-react";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -10,6 +11,13 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <span className="text-white font-bold text-xl">AdamBankingApp</span>
         </div>
+        <Link
+          href="/profile"
+          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mr-4"
+        >
+          <User size={18} />
+          <span className="text-sm">Profile</span>
+        </Link>
         <button
           onClick={logout}
           className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
