@@ -5,18 +5,41 @@ import { Transaction } from "../../lib/types";
 import Badge from "../../components/ui/Badge";
 import Card from "../../components/ui/Card";
 import TransactionFilter from "./TransactionFilter";
+import api from "../../lib/api";
+import toast from "react-hot-toast";
+import { Download } from "lucide-react";
 
 interface RecentTransactionsProps {
   transactions: Transaction[];
   loading: boolean;
+  accountNumber?: string;
 }
 
-export default function RecentTransactions({ transactions, loading }: RecentTransactionsProps) {
+export default function RecentTransactions({ transactions, loading, accountNumber }: RecentTransactionsProps) {
   const [filter, setFilter] = useState("ALL");
 
   const filtered = filter === "ALL"
     ? transactions
     : transactions.filter((tx) => tx.type === filter);
+
+  const handleExport = async () => {
+    if (!accountNumber) return;
+    try {
+      const response = await api.get(`/api/export/transactions/${accountNumber}`, {
+        responseType: "blob",
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `transactions_${accountNumber}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      toast.success("Exported successfully!");
+    } catch {
+      toast.error("Export failed. Please try again.");
+    }
+  };
 
   if (loading) {
     return (
@@ -34,9 +57,20 @@ export default function RecentTransactions({ transactions, loading }: RecentTran
 
   return (
     <Card>
-      <h2 className="text-white font-semibold mb-4">Recent Transactions</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-white font-semibold">Recent Transactions</h2>
+        <button
+          onClick={handleExport}
+          disabled={transactions.length === 0 || !accountNumber}
+          className="flex items-center gap-2 text-sm text-gray-400 hover:text-[#00BFA6] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        >
+          <Download size={16} />
+          <span>Export CSV</span>
+        </button>
+      </div>
+
       <TransactionFilter selected={filter} onChange={setFilter} />
-      
+
       {filtered.length === 0 ? (
         <p className="text-gray-500 text-center py-8">No transactions found</p>
       ) : (

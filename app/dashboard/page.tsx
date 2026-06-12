@@ -87,7 +87,11 @@ export default function DashboardPage() {
         disabled={!selectedAccount}
       />
 
-      <RecentTransactions transactions={transactions} loading={txLoading} />
+      <RecentTransactions
+        transactions={transactions}
+        loading={txLoading}
+        accountNumber={selectedAccount?.accountNumber}
+      />
 
       <div className="mt-6">
         <TransactionChart transactions={transactions} />
