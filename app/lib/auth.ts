@@ -1,11 +1,17 @@
 import Cookies from "js-cookie";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 export const getToken = (): string | null => {
   return Cookies.get("token") || null;
 };
 
 export const setToken = (token: string): void => {
-  Cookies.set("token", token, { expires: 1 }); // 1 deň
+  Cookies.set("token", token, {
+    expires: 1,
+    secure: isProduction,       
+    sameSite: "strict",          
+  });
 };
 
 export const removeToken = (): void => {
