@@ -11,7 +11,7 @@ A modern, responsive banking dashboard built with Next.js and TypeScript. Connec
 
 - **Authentication** — Register and login with JWT tokens stored in secure cookies
 - **Dashboard** — Overview of all accounts and total balance with animations
-- **Account Management** — Create multiple bank accounts (€1,000 starting balance)
+- **Account Management** — Create multiple bank accounts (€10,000 starting balance)
 - **Transactions** — Deposit, withdraw and transfer funds between accounts
 - **Transaction History** — Full history per account with type badges and filtering
 - **Transaction Charts** — Bar chart and doughnut chart powered by Chart.js
