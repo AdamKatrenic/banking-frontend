@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
 
@@ -21,9 +22,12 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 403) {
+    if (error.response?.status === 401 || error.response?.status === 403) {
       Cookies.remove("token");
-      window.location.href = "/login";
+      toast.error("Session expired. Please login again.");
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 1500);
     }
     return Promise.reject(error);
   }
