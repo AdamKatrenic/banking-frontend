@@ -42,10 +42,10 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    if (selectedAccount) {
-      fetchTransactions(selectedAccount.accountNumber);
-    }
-  }, [selectedAccount]);
+  if (selectedAccount) {
+    fetchTransactions(selectedAccount.accountNumber, 0);
+  }
+}, [selectedAccount]);
 
   const totalBalance = accounts.reduce(
     (sum, acc) => sum + Number(acc.balance),

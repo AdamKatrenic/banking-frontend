@@ -7,15 +7,25 @@ import Card from "../../components/ui/Card";
 import TransactionFilter from "./TransactionFilter";
 import api from "../../lib/api";
 import toast from "react-hot-toast";
-import { Download } from "lucide-react";
+import { Download, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface RecentTransactionsProps {
   transactions: Transaction[];
   loading: boolean;
   accountNumber?: string;
+  totalPages?: number;
+  currentPage?: number;
+  onPageChange?: (page: number) => void;
 }
 
-export default function RecentTransactions({ transactions, loading, accountNumber }: RecentTransactionsProps) {
+export default function RecentTransactions({
+  transactions,
+  loading,
+  accountNumber,
+  totalPages = 0,
+  currentPage = 0,
+  onPageChange,
+}: RecentTransactionsProps) {
   const [filter, setFilter] = useState("ALL");
 
   const filtered = filter === "ALL"
@@ -102,6 +112,30 @@ export default function RecentTransactions({ transactions, loading, accountNumbe
               </span>
             </div>
           ))}
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-between mt-4 pt-4 border-t border-[#2A2D3A]">
+          <button
+            onClick={() => onPageChange?.(currentPage - 1)}
+            disabled={currentPage === 0}
+            className="flex items-center gap-1 text-sm text-gray-400 hover:text-[#00BFA6] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          >
+            <ChevronLeft size={16} />
+            Previous
+          </button>
+          <span className="text-gray-500 text-sm">
+            Page {currentPage + 1} of {totalPages}
+          </span>
+          <button
+            onClick={() => onPageChange?.(currentPage + 1)}
+            disabled={currentPage === totalPages - 1}
+            className="flex items-center gap-1 text-sm text-gray-400 hover:text-[#00BFA6] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          >
+            Next
+            <ChevronRight size={16} />
+          </button>
         </div>
       )}
     </Card>
