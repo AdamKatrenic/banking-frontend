@@ -18,7 +18,6 @@ interface RecentTransactionsProps {
   onPageChange?: (page: number) => void;
 }
 
-
 export default function RecentTransactions({
   transactions,
   loading,
