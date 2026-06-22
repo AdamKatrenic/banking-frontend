@@ -26,6 +26,7 @@ export default function RecentTransactions({
   currentPage = 0,
   onPageChange,
 }: RecentTransactionsProps) {
+  
   const [filter, setFilter] = useState("ALL");
 
   const filtered = filter === "ALL"
