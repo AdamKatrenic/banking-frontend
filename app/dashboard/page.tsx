@@ -31,6 +31,8 @@ export default function DashboardPage() {
     transactions,
     loading: txLoading,
     fetchTransactions,
+    totalPages,
+    currentPage,
   } = useTransactions();
 
   useEffect(() => {
@@ -42,10 +44,10 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-  if (selectedAccount) {
-    fetchTransactions(selectedAccount.accountNumber, 0);
-  }
-}, [selectedAccount]);
+    if (selectedAccount) {
+      fetchTransactions(selectedAccount.accountNumber, 0);
+    }
+  }, [selectedAccount]);
 
   const totalBalance = accounts.reduce(
     (sum, acc) => sum + Number(acc.balance),
@@ -91,6 +93,12 @@ export default function DashboardPage() {
         transactions={transactions}
         loading={txLoading}
         accountNumber={selectedAccount?.accountNumber}
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={(page) =>
+          selectedAccount &&
+          fetchTransactions(selectedAccount.accountNumber, page)
+        }
       />
 
       <div className="mt-6">
@@ -120,8 +128,6 @@ export default function DashboardPage() {
           onSuccess={handleSuccess}
         />
       )}
-
     </PageWrapper>
-    
   );
 }
