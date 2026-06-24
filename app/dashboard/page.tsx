@@ -17,6 +17,7 @@ import RecentTransactions from "../components/dashboard/RecentTransactions";
 import DepositModal from "../components/modals/DepositModal";
 import WithdrawModal from "../components/modals/WithdrawModal";
 import TransferModal from "../components/modals/TransferModal";
+import toast from "react-hot-toast";
 
 type ModalType = "deposit" | "withdraw" | "transfer" | null;
 
@@ -70,6 +71,19 @@ export default function DashboardPage() {
     }
   };
 
+  const handleDeleteAccount = async (accountId: number) => {
+  try {
+    await api.delete(`/api/accounts/${accountId}`);
+    toast.success("Account deleted successfully!");
+    fetchAccounts();
+    if (selectedAccount?.id === accountId) {
+      setSelectedAccount(null);
+    }
+  } catch {
+    toast.error("Failed to delete account.");
+  }
+};
+
   return (
     <PageWrapper>
       <WelcomeBanner name={userName} totalBalance={totalBalance} />
@@ -79,6 +93,7 @@ export default function DashboardPage() {
         selectedAccount={selectedAccount}
         onSelect={setSelectedAccount}
         onCreateAccount={handleCreateAccount}
+        onDelete={handleDeleteAccount}
         loading={accountsLoading}
       />
 
