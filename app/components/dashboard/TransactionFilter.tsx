@@ -9,7 +9,6 @@ export default function TransactionFilter({
   selected,
   onChange,
 }: TransactionFilterProps) {
-
   const filters = [
     { label: "All", value: "ALL" },
     { label: "↑ In", value: "DEPOSIT" },
